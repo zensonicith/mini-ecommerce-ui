@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="card-center">
+        <form [formGroup]="loginForm" (submit)="submitLogin()" class="form-login">
+            <div>
+                <label for="username">Username: </label>
+                <input type="text" id="username" name="username" formControlName="username" />
+            </div>
+            <div>
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" formControlName="password" />
+            </div>
+            <button class="btn-login" type="submit">Login</button>
+        </form>
+        @if (loginService.errorMessage()){
+            <div class="error-message">{{ loginService.errorMessage() }}</div>
+        }
+    </div>
+</body>
+
+</html>
