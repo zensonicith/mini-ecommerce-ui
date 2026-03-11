@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HousingService } from '../housing.service';
-import { HousingLocationInfo } from '../housinglocation';
+import { ProductService } from '../product.service';
+import { ProductInfo } from '../product';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   imports: [ReactiveFormsModule],
   template: `
     <article>
-      <img
+      <!-- <img
         class="listing-photo"
         [src]="housingLocation?.photo"
         alt="Exterior photo of {{ housingLocation?.name }}"
@@ -38,6 +38,14 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
           <input id="email" type="email" formControlName="email" />
           <button type="submit" class="primary">Apply now</button>
         </form>
+      </section> -->
+
+      <section class="listing-features">
+        <h2 class="section-heading">{{ product?.productName }}</h2>
+        <ul>
+          <li>Price: $ {{ product?.price?.toFixed(2) }}</li>
+          <li>Units available: {{ product?.unit }} pieces.</li>
+        </ul>
       </section>
     </article>
   `,
@@ -45,8 +53,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class Details {
   route: ActivatedRoute = inject(ActivatedRoute);
-  housingService = inject(HousingService);
-  housingLocation: HousingLocationInfo | undefined;
+  productService = inject(ProductService);
+  product: ProductInfo | undefined;
   changeDetectorRef = inject(ChangeDetectorRef)
   applyForm = new FormGroup({
     firstName: new FormControl(''),
@@ -54,15 +62,15 @@ export class Details {
     email: new FormControl(''),
   });
   constructor() {
-    const housingLocationId = Number(this.route.snapshot.params['id']);
-    this.housingService.getHousingLocationById(housingLocationId).then((housingLocation) => {
-      this.housingLocation = housingLocation;
+    const productId = Number(this.route.snapshot.params['id']);
+    this.productService.getProductById(productId).then((product) => {
+      this.product = product;
       this.changeDetectorRef.markForCheck();
     });
   }
 
   submitApplication(){
-    this.housingService.submitApplication(
+    this.productService.submitApplication(
       this.applyForm.value.firstName ?? '',
       this.applyForm.value.lastName ?? '',
       this.applyForm.value.email ?? '',
