@@ -1,47 +1,54 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { HousingLocation } from '../housing-location/housing-location';
-import { HousingLocationInfo } from '../housinglocation';
-import { HousingService } from '../housing.service';
-
+import { ChangeDetectorRef, Component, inject } from "@angular/core";
+import { Product } from "../product/product";
+import { ProductInfo } from "../product";
+import { ProductService } from "../product.service";
 @Component({
-  selector: 'app-home',
-  imports: [HousingLocation],
+  selector: "app-home",
+  imports: [Product],
   template: `
     <section>
       <form>
-        <input type="text" placeholder="Filter by city" #filter/>
-        <button class="primary" type="button" (click)="filterResult(filter.value)">Search</button>
+        <input type="text" placeholder="Filter by city" #filter />
+        <button
+          class="primary"
+          type="button"
+          (click)="filterResult(filter.value)"
+        >
+          Search
+        </button>
       </form>
     </section>
     <section class="results">
-      @for (housingLocation of filteredLocationList; track $index) {
-        <app-housing-location [housingLocation]="housingLocation" />
+      @for (product of filteredLocationList; track $index) {
+        <app-product [product]="product" />
       }
     </section>
   `,
-  styleUrls: ['./home.css'],
+  styleUrls: ["./home.css"],
 })
 export class Home {
-  housingLocationList: HousingLocationInfo[] = [];
-  filteredLocationList: HousingLocationInfo[] = [];
-  housingService: HousingService = inject(HousingService);
-  changeDetectorRef = inject(ChangeDetectorRef)
-  constructor(){
-    this.housingService
-    .getAllHousingLocations()
-    .then((housingLocationList: HousingLocationInfo[]) => {
-      this.housingLocationList = housingLocationList;
-      this.filteredLocationList = this.housingLocationList;
-      this.changeDetectorRef.markForCheck();
-    })
+  productList: ProductInfo[] = [];
+  filteredLocationList: ProductInfo[] = [];
+  productService: ProductService = inject(ProductService);
+  changeDetectorRef = inject(ChangeDetectorRef);
+  constructor() {
+    this.productService
+      .getAllPoducts()
+    .then((productList: ProductInfo[]) => {
+        this.productList = productList;
+        this.filteredLocationList = this.productList;
+        this.changeDetectorRef.markForCheck();
+      });
   }
-  
-  filterResult(value: string){
-    if (!value){
-      this.filteredLocationList = this.housingLocationList;
+
+  filterResult(value: string) {
+    if (!value) {
+      this.filteredLocationList = this.productList;
       return;
     }
-    this.filteredLocationList = this.housingLocationList.filter((housingLocation) => 
-      housingLocation?.city.toLowerCase().includes(value.toLocaleLowerCase()));
+    this.filteredLocationList = this.productList.filter(
+      (product) =>
+        product.city.toLowerCase().includes(value.toLocaleLowerCase()),
+    );
   }
 }
