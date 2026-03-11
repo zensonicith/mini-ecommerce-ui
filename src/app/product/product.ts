@@ -1,24 +1,17 @@
-import { Component, input } from '@angular/core';
-import { ProductInfo } from '../product';
+import { Component, input } from "@angular/core";
+import { ProductInfo } from "../product";
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-product',
+  selector: "app-product",
   imports: [RouterLink],
   template: `
     <section class="listing">
-      <!-- <img
-        class="listing-photo"
-        [src]="product().photo"
-        alt="Exterior photo of {{ product().name }}"
-        crossorigin
-      /> -->
-      <h2 class="listing-heading">{{ product().name }}</h2>
-      <p class="listing-location">{{ product().price }}, {{ product().unit }}</p>
-      <a [routerLink]="['/details', product().id]">Learn More</a>
+      <h2 class="listing-heading">{{ product().productName }}</h2>
+      <a [routerLink]="['/details', product().id]">Details</a>
     </section>
   `,
-  styleUrls: ['./product.css'],
+  styleUrls: ["./product.css"],
 })
 export class Product {
   product = input.required<ProductInfo>();

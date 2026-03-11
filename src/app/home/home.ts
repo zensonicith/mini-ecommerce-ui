@@ -6,7 +6,7 @@ import { ProductService } from "../product.service";
   selector: "app-home",
   imports: [Product],
   template: `
-    <section>
+    <!-- <section>
       <form>
         <input type="text" placeholder="Filter by city" #filter />
         <button
@@ -17,7 +17,7 @@ import { ProductService } from "../product.service";
           Search
         </button>
       </form>
-    </section>
+    </section> -->
     <section class="results">
       @for (product of filteredList; track $index) {
         <app-product [product]="product" />
@@ -32,13 +32,11 @@ export class Home {
   productService: ProductService = inject(ProductService);
   changeDetectorRef = inject(ChangeDetectorRef);
   constructor() {
-    this.productService
-      .getAllPoducts()
-    .then((productList: ProductInfo[]) => {
-        this.productList = productList;
-        this.filteredList = this.productList;
-        this.changeDetectorRef.markForCheck();
-      });
+    this.productService.getAllPoducts().then((productList: ProductInfo[]) => {
+      this.productList = productList;
+      this.filteredList = this.productList;
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   filterResult(value: string) {
@@ -46,9 +44,8 @@ export class Home {
       this.filteredList = this.productList;
       return;
     }
-    this.filteredList = this.productList.filter(
-      (product) =>
-        product.name.toLowerCase().includes(value.toLocaleLowerCase()),
+    this.filteredList = this.productList.filter((product) =>
+      product.productName.toLowerCase().includes(value.toLocaleLowerCase()),
     );
   }
 }

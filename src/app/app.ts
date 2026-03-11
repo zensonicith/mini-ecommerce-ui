@@ -5,7 +5,7 @@ import { LoginService } from './login.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink],
-  template: ` 
+  template: `
     <main>
       <header class="navbar">
         <a class="brand-link" [routerLink]="['/']">
