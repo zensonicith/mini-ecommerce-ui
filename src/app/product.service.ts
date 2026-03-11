@@ -5,7 +5,7 @@ import { ProductInfo } from "./product";
   providedIn: "root",
 })
 export class ProductService {
-  url = "http://localhost:5291/api/products";
+  url = "https://localhost:7280/api/products";
   async getAllPoducts(): Promise<ProductInfo[]> {
     const data = await fetch(this.url);
     return (await data.json()) ?? [];

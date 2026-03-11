@@ -5,7 +5,7 @@ import { CustomerInfo } from './user';
   providedIn: 'root',
 })
 export class LoginService {
-  url = 'http://localhost:5291/api/auth/login';
+  url = 'https://localhost:7280/api/auth/login';
   currentCustomer = signal<CustomerInfo | null>(null);
   isLoggedIn = computed(() => this.currentCustomer() !== null);
   errorMessage = signal<string | null>(null);

@@ -48,7 +48,7 @@ export class Home {
     }
     this.filteredLocationList = this.productList.filter(
       (product) =>
-        product.city.toLowerCase().includes(value.toLocaleLowerCase()),
+        product.name.toLowerCase().includes(value.toLocaleLowerCase()),
     );
   }
 }
