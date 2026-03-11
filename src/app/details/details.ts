@@ -41,7 +41,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
       </section> -->
 
       <section class="listing-features">
-        <h2 class="section-heading">{{ product?.name }}</h2>
+        <h2 class="section-heading">{{ product?.productName }}</h2>
         <ul>
           <li>Price: $ {{ product?.price?.toFixed(2) }}</li>
           <li>Units available: {{ product?.unit }} pieces.</li>
