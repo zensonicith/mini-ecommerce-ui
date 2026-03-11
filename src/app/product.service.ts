@@ -6,7 +6,7 @@ import { ProductInfo } from "./product";
 })
 export class ProductService {
   url = "https://localhost:7280/api/products";
-  async getAllPoducts(): Promise<ProductInfo[]> {
+  async getAllProducts(): Promise<ProductInfo[]> {
     const data = await fetch(this.url);
     return (await data.json()) ?? [];
   }
@@ -24,4 +24,35 @@ export class ProductService {
       `Homes application received: firstName: ${firstName}, lastName: ${lastName}, email: ${email}.`,
     );
   }
+
+   async createProduct(product: Omit<ProductInfo, "id">): Promise<ProductInfo> {
+    const response = await fetch(this.url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+
+    return await response.json();
+  }
+
+  async updateProduct(id: number, product: Omit<ProductInfo, "id">): Promise<ProductInfo> {
+    const response = await fetch(`${this.url}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+
+    return await response.json();
+  }
+
+  async deleteProduct(id: number): Promise<void> {
+    await fetch(`${this.url}/${id}`, {
+      method: "DELETE",
+    });
+  }
+
 }
