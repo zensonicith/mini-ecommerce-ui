@@ -19,7 +19,7 @@ import { ProductService } from "../product.service";
       </form>
     </section>
     <section class="results">
-      @for (product of filteredLocationList; track $index) {
+      @for (product of filteredList; track $index) {
         <app-product [product]="product" />
       }
     </section>
@@ -28,7 +28,7 @@ import { ProductService } from "../product.service";
 })
 export class Home {
   productList: ProductInfo[] = [];
-  filteredLocationList: ProductInfo[] = [];
+  filteredList: ProductInfo[] = [];
   productService: ProductService = inject(ProductService);
   changeDetectorRef = inject(ChangeDetectorRef);
   constructor() {
@@ -36,19 +36,19 @@ export class Home {
       .getAllPoducts()
     .then((productList: ProductInfo[]) => {
         this.productList = productList;
-        this.filteredLocationList = this.productList;
+        this.filteredList = this.productList;
         this.changeDetectorRef.markForCheck();
       });
   }
 
   filterResult(value: string) {
     if (!value) {
-      this.filteredLocationList = this.productList;
+      this.filteredList = this.productList;
       return;
     }
-    this.filteredLocationList = this.productList.filter(
+    this.filteredList = this.productList.filter(
       (product) =>
-        product.city.toLowerCase().includes(value.toLocaleLowerCase()),
+        product.name.toLowerCase().includes(value.toLocaleLowerCase()),
     );
   }
 }
