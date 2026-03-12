@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductInfo } from '../product';
@@ -13,11 +13,13 @@ import { ProductService } from '../product.service';
 })
 export class ProductAdminComponent implements OnInit {
   productService = inject(ProductService);
+  changedetectorRef = inject(ChangeDetectorRef);
   products: ProductInfo[] = [];
   modal: 'add' | 'edit' | 'delete' | null = null;
   selected: ProductInfo | null = null;
   form: Omit<ProductInfo, 'id'> = {
     productName: '',
+    description: '',
     unit: 0,
     price: 0
   };
@@ -27,6 +29,8 @@ export class ProductAdminComponent implements OnInit {
   }
   async loadProducts() {
     this.products = await this.productService.getAllProducts();
+    console.log(this.products);
+    this.changedetectorRef.markForCheck();
   }
   showToast(msg: string, type = 'success') {
     this.toast = { msg, type };
@@ -36,6 +40,7 @@ export class ProductAdminComponent implements OnInit {
     this.modal = 'add';
     this.form = {
       productName: '',
+      description: '',
       unit: 0,
       price: 0
     };
@@ -45,6 +50,7 @@ export class ProductAdminComponent implements OnInit {
     this.selected = p;
     this.form = {
       productName: p.productName,
+      description: p.description,
       unit: p.unit,
       price: p.price
     };

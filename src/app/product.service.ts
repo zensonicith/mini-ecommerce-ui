@@ -24,8 +24,7 @@ export class ProductService {
       `Homes application received: firstName: ${firstName}, lastName: ${lastName}, email: ${email}.`,
     );
   }
-
-   async createProduct(product: Omit<ProductInfo, "id">): Promise<ProductInfo> {
+  async createProduct(product: Omit<ProductInfo, "id">): Promise<ProductInfo> {
     const response = await fetch(this.url, {
       method: "POST",
       headers: {
@@ -37,7 +36,10 @@ export class ProductService {
     return await response.json();
   }
 
-  async updateProduct(id: number, product: Omit<ProductInfo, "id">): Promise<ProductInfo> {
+  async updateProduct(
+    id: number,
+    product: Omit<ProductInfo, "id">
+  ): Promise<boolean> {
     const response = await fetch(`${this.url}/${id}`, {
       method: "PUT",
       headers: {
@@ -46,13 +48,15 @@ export class ProductService {
       body: JSON.stringify(product),
     });
 
-    return await response.json();
+    return response.ok;
   }
 
-  async deleteProduct(id: number): Promise<void> {
-    await fetch(`${this.url}/${id}`, {
+  async deleteProduct(id: number): Promise<boolean> {
+    const response = await fetch(`${this.url}/${id}`, {
       method: "DELETE",
     });
+
+    return response.ok;
   }
 
 }
