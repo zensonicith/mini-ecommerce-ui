@@ -17,7 +17,6 @@ export class ProductAdminComponent implements OnInit {
   modal: 'add' | 'edit' | 'delete' | null = null;
   selected: ProductInfo | null = null;
   form: Omit<ProductInfo, 'id'> = {
-    url: '',
     productName: '',
     unit: 0,
     price: 0
@@ -36,7 +35,6 @@ export class ProductAdminComponent implements OnInit {
   openAdd() {
     this.modal = 'add';
     this.form = {
-      url: '',
       productName: '',
       unit: 0,
       price: 0
@@ -45,9 +43,7 @@ export class ProductAdminComponent implements OnInit {
   openEdit(p: ProductInfo) {
     this.modal = 'edit';
     this.selected = p;
-
     this.form = {
-      url: p.url,
       productName: p.productName,
       unit: p.unit,
       price: p.price
@@ -61,14 +57,12 @@ export class ProductAdminComponent implements OnInit {
     this.modal = null;
     this.selected = null;
   }
-
   async addProduct() {
     await this.productService.createProduct(this.form);
     await this.loadProducts();
     this.closeModal();
     this.showToast('Product added');
   }
-
   async editProduct() {
     if (!this.selected) return;
     await this.productService.updateProduct(
@@ -79,13 +73,15 @@ export class ProductAdminComponent implements OnInit {
     this.closeModal();
     this.showToast('Product updated');
   }
-
-
   async deleteProduct() {
     if (!this.selected) return;
     await this.productService.deleteProduct(this.selected.id);
     await this.loadProducts();
     this.closeModal();
     this.showToast('Product deleted', 'danger');
+  }
+
+  get productName(): string {
+    return this.selected?.productName ?? '';
   }
 }

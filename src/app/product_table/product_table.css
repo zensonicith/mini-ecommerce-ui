@@ -5,7 +5,6 @@
   box-sizing: border-box;
 }
 
-/* ── Page ── */
 .product-admin {
   padding: 48px;
   background: #0d1017;
@@ -13,7 +12,6 @@
   min-height: 100vh;
 }
 
-/* ── Header ── */
 .product-admin__header {
   display: flex;
   align-items: center;
@@ -28,7 +26,6 @@
   letter-spacing: -0.02em;
 }
 
-/* ── Table ── */
 .product-admin__table {
   width: 100%;
   border-collapse: collapse;
@@ -64,7 +61,6 @@
   background: rgba(91,106,240,0.05);
 }
 
-/* ── Buttons ── */
 .btn {
   padding: 8px 18px;
   border: none;
@@ -102,7 +98,6 @@
   border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ── Overlay ── */
 .product-admin__overlay {
   position: fixed;
   inset: 0;
@@ -116,7 +111,6 @@
   animation: fadeIn 0.2s ease;
 }
 
-/* ── Modal ── */
 .product-admin__modal {
   background: linear-gradient(135deg, #161921 0%, #1a1f2e 100%);
   border: 1px solid rgba(91,106,240,0.3);
@@ -140,7 +134,6 @@
   font-size: 15px;
 }
 
-/* ── Inputs ── */
 .product-admin__input {
   display: block;
   width: 100%;
@@ -159,14 +152,12 @@
 .product-admin__input::placeholder { color: #4a5568; }
 .product-admin__input:focus { border-color: #5b6af0; }
 
-/* ── Modal Actions ── */
 .product-admin__modal-actions {
   display: flex;
   gap: 10px;
   margin-top: 24px;
 }
 
-/* ── Animations ── */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
