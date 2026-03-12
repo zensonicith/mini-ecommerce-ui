@@ -14,11 +14,7 @@ export class Home {
   productService: ProductService = inject(ProductService);
   changeDetectorRef = inject(ChangeDetectorRef);
   constructor() {
-    this.productService.getAllProducts().then((productList: ProductInfo[] | null) => {
-        this.productList = productList ?? [];
-        this.filteredList = this.productList;
-        this.changeDetectorRef.markForCheck();
-      });
+    this.loadProducts();
   }
   filterResult(value: string) {
     if (!value) {
@@ -28,5 +24,13 @@ export class Home {
     this.filteredList = this.productList.filter((product) =>
       product.productName.toLowerCase().includes(value.toLocaleLowerCase()),
     );
+  }
+
+  loadProducts(): void {
+    this.productService.getAllProducts().then((productList: ProductInfo[] | null) => {
+      this.productList = productList ?? [];
+      this.filteredList = this.productList;
+      this.changeDetectorRef.markForCheck();
+    });
   }
 }
