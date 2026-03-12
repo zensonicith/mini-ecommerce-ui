@@ -1,42 +1,54 @@
-import { computed, Injectable, signal } from '@angular/core';
-import { CustomerInfo } from './user';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { AuthResponse, CustomerInfo } from './user';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  url = 'https://localhost:7280/api/auth/login';
+  url = 'api/auth/login';
   currentCustomer = signal<CustomerInfo | null>(null);
   isLoggedIn = computed(() => this.currentCustomer() !== null);
   errorMessage = signal<string | null>(null);
+  private readonly httpClient = inject(HttpClient);
   constructor() {}
 
   // Call api for login, if success, set currentCustomer and return true, else set errorMessage and return false
-  async login(username: string, password: string) {
+  async login(username: string, password: string): Promise<boolean> {
     if (!username || !password) {
       throw new Error('Username and password are required');
     }
     const body = { username, password };
-    const data = await fetch(this.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
 
-    if (data.ok) {
-      const responseJson = await data.json();
-      const customer: CustomerInfo = responseJson.customer;
-      this.currentCustomer.set(customer);
+    try {
+      const response = await firstValueFrom(
+        this.httpClient.post<AuthResponse>(this.url, body)
+      );
+      this.currentCustomer.set(response.customer);
       this.errorMessage.set(null);
+      localStorage.setItem('token', response.token);
       return true;
-    }
-    else{
-      const errorData = await data.json();
-      this.errorMessage.set(errorData.message || 'Login failed');
+    } catch {
+      this.errorMessage.set('Login failed. Please check your credentials and try again.');
       return false;
     }
   }
+
+  logged(){
+    return this.isLoggedIn();
+  }
+
+  getCurrentCustomer(){
+    return this.currentCustomer();
+  }
+
   logout() {
     this.currentCustomer.set(null);
+    localStorage.removeItem('token');
+  }
+
+  getCustomerRole() : string {
+    return this.currentCustomer()?.role ?? 'USER';
   }
 }

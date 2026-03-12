@@ -3,17 +3,20 @@ import { Home } from "./home/home";
 import { Details } from "./details/details";
 import { Login } from "./login/login";
 import { ProductAdminComponent } from "./product_table/product_table";
+import { authGuard } from "./auth.guard";
 
 const routeConfig: Routes = [
     {
         path: '',
         component: Home,
-        title: 'Home page'
+        title: 'Home page',
+        canActivate: [authGuard]
     },
     {
         path: 'details/:id',
         component: Details,
         title: 'Home details',
+        canActivate: [authGuard]
     },
     {
         path: 'login',
@@ -23,7 +26,7 @@ const routeConfig: Routes = [
     {
         path: 'admin',
         component: ProductAdminComponent,
-        title: 'Product Admin'
+        title: 'Product Admin',
     }
 ]
 

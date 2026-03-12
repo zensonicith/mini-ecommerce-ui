@@ -5,29 +5,7 @@ import { LoginService } from './login.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink],
-  template: `
-    <main>
-      <header class="navbar">
-        <a class="brand-link" [routerLink]="['/']">
-          <div class="brand-name">
-            <img class="brand-logo" src="/public/logo.svg" alt="logo" aria-hidden="true" />
-          </div>
-        </a>
-
-        <div class="auth-section">
-          @if (loginService.isLoggedIn()) {
-            <span class="user-name">{{ loginService.currentCustomer()?.name || loginService.currentCustomer()?.userName }}</span>
-            <button class="logout-btn" type="button" (click)="logout()">Logout</button>
-          } @else {
-            <a class="login-link" [routerLink]="['/login']">Login</a>
-          }
-        </div>
-      </header>
-
-      <section class="content">
-        <router-outlet />
-      </section>
-    </main>`,
+  templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
 export class App {
@@ -35,5 +13,17 @@ export class App {
 
   logout() {
     this.loginService.logout();
+  }
+
+  getCurrentCustomer() {
+    return this.loginService.getCurrentCustomer();
+  }
+
+  logged() {
+    return this.loginService.logged();
+  }
+
+  isAdmin() {
+    return this.loginService.getCustomerRole() === 'ADMIN';
   }
 }

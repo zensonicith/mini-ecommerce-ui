@@ -1,7 +1,8 @@
 :host {
   --content-padding: 10px;
 }
-.navbar {
+
+.app__navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,46 +11,47 @@
   box-shadow: 0px 5px 25px var(--shadow-color);
 }
 
-.brand-link {
+.app__logo {
   display: flex;
   align-items: center;
   text-decoration: none;
 }
 
-.brand-name {
+.app__brand {
   display: flex;
   align-items: center;
 }
 
-.auth-section {
+.app__auth {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.login-link,
-.user-name {
+.app__user-name {
   font-weight: 600;
   color: #222;
 }
 
-.login-link {
-  text-decoration: none;
-}
-
-.login-link:hover {
-  text-decoration: underline;
-}
-
-.logout-btn {
+.app__btn {
   font: inherit;
   padding: 6px 10px;
-  border-radius: 4px;
-  border: 1px solid currentColor;
-  background: transparent;
   cursor: pointer;
+  color: white;
 }
 
-.content {
+.app__btn_type_login {
+  background-color: blueviolet;
+}
+
+.app__btn_type_admin {
+  background-color: #1f7a3f;
+}
+
+.app__btn_type_logout {
+  background-color: rgb(43, 101, 226);
+}
+
+.app__content {
   padding: var(--content-padding);
 }

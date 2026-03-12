@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from "@angular/core";
 import { Product } from "../product/product";
 import { ProductInfo } from "../product";
-import { ProductService } from "../product.service";
+import { ProductHttpService } from "../product-http.service";
 @Component({
   selector: "app-home",
   imports: [Product],
@@ -11,7 +11,7 @@ import { ProductService } from "../product.service";
 export class Home {
   productList: ProductInfo[] = [];
   filteredList: ProductInfo[] = [];
-  productService: ProductService = inject(ProductService);
+  productService: ProductHttpService = inject(ProductHttpService);
   changeDetectorRef = inject(ChangeDetectorRef);
   constructor() {
     this.loadProducts();
