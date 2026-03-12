@@ -1,0 +1,129 @@
+<div class="product-admin">
+  <header class="product-admin__header">
+    <h1 class="product-admin__title">Product Admin</h1>
+    <button
+      class="product-admin__add-btn btn btn-primary"
+      (click)="openAdd()"
+    >Add Product
+    </button>
+  </header>
+  <table class="product-admin__table">
+    <thead class="product-admin__table-head">
+      <tr class="product-admin__table-row">
+        <th>ID</th>
+        <!-- <th>Image</th> -->
+        <th>Name</th>
+        <th>Description</th>
+        <th>Unit</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody class="product-admin__table-body">
+       @for (p of products; track p.id){
+         <tr>
+            <td>{{p.id}}</td>
+            <!-- <td><img
+                [src]="p.url"
+                alt="product"
+                width="50"
+                height="50"
+                style="object-fit:cover;border-radius:6px"
+            />
+            </td> -->
+            <td>{{p.productName}}</td>
+            <td>{{p.description}}</td>
+            <td>{{p.unit}}</td>
+            <td>${{p.price}}</td>
+            <td>
+              <button
+                class="btn btn-edit"
+                (click)="openEdit(p)"
+              >Edit
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="openDelete(p)"
+              >Delete
+              </button>
+            </td>
+          </tr>
+       }     
+    </tbody>
+  </table>
+  @if (modal) {
+  <div class="product-admin__overlay">
+    <div class="product-admin__modal">
+      @if (modal !== 'delete') {
+      <h2>
+        {{modal === 'add' ? 'Add Product' : 'Edit Product'}}
+      </h2>
+      <!-- <input
+        class="product-admin__input"
+        placeholder="Image URL"
+        [(ngModel)]="form.url"
+      /> -->
+      <input
+        class="product-admin__input"
+        placeholder="Product Name"
+        [(ngModel)]="form.productName"
+      />
+      <input
+        class="product-admin__input"
+        placeholder="Description"
+        [(ngModel)]="form.description"
+      />
+      <input
+        class="product-admin__input"
+        type="number"
+        placeholder="Unit"
+        [(ngModel)]="form.unit"
+      />
+      <input
+        class="product-admin__input"
+        type="number"
+        placeholder="Price"
+        [(ngModel)]="form.price"
+      />
+      <!-- @if (form.url) {
+        <img
+          [src]="form.url"
+          width="100"
+          style="margin-top:10px;border-radius:6px"
+        />
+      } -->
+      <div class="product-admin__modal-actions">
+        <button
+          class="btn btn-primary"
+          (click)="modal === 'add' ? addProduct() : editProduct()"
+        >Save
+        </button>
+        <button
+          class="btn btn-secondary"
+          (click)="closeModal()"
+        >Cancel
+        </button>
+      </div>
+      }
+      @if (modal === 'delete') {
+      <h2>Delete Product</h2>
+      <p>
+        Delete {{productName}} ?
+      </p>
+      <div class="product-admin__modal-actions">
+        <button
+          class="btn btn-danger"
+          (click)="deleteProduct()"
+        > Delete
+        </button>
+        <button
+          class="btn btn-secondary"
+          (click)="closeModal()"
+        > Cancel
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>
