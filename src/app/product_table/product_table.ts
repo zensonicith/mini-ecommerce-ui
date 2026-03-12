@@ -29,7 +29,6 @@ export class ProductAdminComponent implements OnInit {
   }
   async loadProducts() {
     this.products = await this.productService.getAllProducts();
-    console.log(this.products);
     this.changedetectorRef.markForCheck();
   }
   showToast(msg: string, type = 'success') {
