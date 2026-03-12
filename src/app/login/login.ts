@@ -16,14 +16,12 @@ export class Login {
   });
   loginService = inject(LoginService);
   router = inject(Router);
-  submitLogin() {
+  async submitLogin() {
     const { username, password } = this.loginForm.getRawValue();
     console.log(username, password);
-    this.loginService.login(username, password)
-    .then((response) => {
-      if (response) {
-        this.router.navigate(['/']);
-      }
-    })
+    const success = await this.loginService.login(username, password);
+    if (success) {
+      this.router.navigate(['/']);
+    }
   }
 }

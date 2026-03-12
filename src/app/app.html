@@ -1,0 +1,25 @@
+<main class="app">
+    <header class="app__navbar">
+        <a class="app__logo" [routerLink]="['/']">
+            <div class="app__brand">
+                <img class="app__brand-img" src="/public/logo.svg" alt="logo" aria-hidden="true" />
+            </div>
+        </a>
+
+        <div class="app__auth">
+            @if (logged()) {
+            <span class="app__user-name">{{ getCurrentCustomer()?.name || getCurrentCustomer()?.userName }}</span>
+            @if (isAdmin()) {
+            <button class="app__btn app__btn_type_admin" type="button" [routerLink]="['/admin']">Admin</button>
+            }
+            <button class="app__btn app__btn_type_logout" type="button" (click)="logout()">Logout</button>
+            } @else {
+            <button class="app__btn app__btn_type_login" type="button" [routerLink]="['/login']">Login</button>
+            }
+        </div>
+    </header>
+
+    <section class="app__content">
+        <router-outlet />
+    </section>
+</main>

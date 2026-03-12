@@ -4,4 +4,10 @@ export interface CustomerInfo {
     address: string;
     userName: string;
     city: string;
+    role: string;
+}
+
+export interface AuthResponse {
+    token: string;
+    customer: CustomerInfo;
 }

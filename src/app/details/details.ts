@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../product.service';
+import { ProductHttpService } from '../product-http.service';
 import { ProductInfo } from '../product';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -53,7 +53,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class Details {
   route: ActivatedRoute = inject(ActivatedRoute);
-  productService = inject(ProductService);
+  productService = inject(ProductHttpService);
   product: ProductInfo | undefined;
   changeDetectorRef = inject(ChangeDetectorRef)
   applyForm = new FormGroup({

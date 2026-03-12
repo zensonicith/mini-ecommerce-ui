@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductInfo } from '../product';
 import { ProductService } from '../product.service';
+import { ProductHttpService } from '../product-http.service';
 
 @Component({
   selector: 'app-product-admin',
@@ -12,7 +13,7 @@ import { ProductService } from '../product.service';
   styleUrls: ['./product_table.css']
 })
 export class ProductAdminComponent implements OnInit {
-  productService = inject(ProductService);
+  productService = inject(ProductHttpService);
   changedetectorRef = inject(ChangeDetectorRef);
   products: ProductInfo[] = [];
   modal: 'add' | 'edit' | 'delete' | null = null;
