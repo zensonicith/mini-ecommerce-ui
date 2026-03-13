@@ -24,4 +24,8 @@ export class Login {
       this.router.navigate(['/']);
     }
   }
+
+  getErrorMessage() {
+    return this.loginService.errorMessage();
+  }
 }

@@ -27,6 +27,7 @@ const routeConfig: Routes = [
         path: 'admin',
         component: ProductAdminComponent,
         title: 'Product Admin',
+        canActivate: [authGuard]
     }
 ]
 

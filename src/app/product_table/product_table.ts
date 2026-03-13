@@ -1,9 +1,8 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { ProductInfo } from "../product";
-import { ProductService } from "../product.service";
-import { ProductHttpService } from "../product-http.service";
+import { Component, OnInit, inject, ChangeDetectorRef  } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ProductInfo } from '../product';
+import { ProductHttpService } from '../product-http.service';
 
 @Component({
   selector: "app-product-admin",
