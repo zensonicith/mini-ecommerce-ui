@@ -4,4 +4,5 @@ export interface ProductInfo {
     description: string;
     price: number;
     unit: number;
+    imageUrl: string;
 }
