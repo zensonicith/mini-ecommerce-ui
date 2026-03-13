@@ -36,7 +36,7 @@ export class LoginService {
   }
 
   logged(){
-    return this.isLoggedIn();
+    return localStorage.getItem('token') !== null;
   }
 
   getCurrentCustomer(){
