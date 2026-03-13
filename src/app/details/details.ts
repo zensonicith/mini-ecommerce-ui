@@ -1,79 +1,26 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ProductHttpService } from '../product-http.service';
-import { ProductInfo } from '../product';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ProductHttpService } from "../product-http.service";
+import { CommonModule } from "@angular/common";
+import { switchMap } from "rxjs";
 
 @Component({
-  selector: 'app-details',
-  imports: [ReactiveFormsModule],
-  template: `
-    <article>
-      <!-- <img
-        class="listing-photo"
-        [src]="housingLocation?.photo"
-        alt="Exterior photo of {{ housingLocation?.name }}"
-        crossorigin
-      />
-      <section class="listing-description">
-        <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
-        <p class="listing-location">{{ housingLocation?.city }}, {{ housingLocation?.state }}</p>
-      </section>
-      <section class="listing-features">
-        <h2 class="section-heading">About this housing location</h2>
-        <ul>
-          <li>Units available: {{ housingLocation?.availableUnits }}</li>
-          <li>Does this location have wifi: {{ housingLocation?.wifi }}</li>
-          <li>Does this location have laundry: {{ housingLocation?.laundry }}</li>
-        </ul>
-      </section>
-      <section class="listing-apply">
-        <h2 class="section-heading">Apply now to live here</h2>
-        <form [formGroup]="applyForm" (submit)="submitApplication()">
-          <label for="first-name">First Name</label>
-          <input id="first-name" type="text" formControlName="firstName" />
-          <label for="last-name">Last Name</label>
-          <input id="last-name" type="text" formControlName="lastName" />
-          <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" />
-          <button type="submit" class="primary">Apply now</button>
-        </form>
-      </section> -->
-
-      <section class="listing-features">
-        <h2 class="section-heading">{{ product?.productName }}</h2>
-        <ul>
-          <li>Price: $ {{ product?.price?.toFixed(2) }}</li>
-          <li>Units available: {{ product?.unit }} pieces.</li>
-        </ul>
-      </section>
-    </article>
-  `,
-  styleUrls: ['./details.css'],
+  selector: "app-details",
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: "./details.html",
+  styleUrls: ["./details.css"],
 })
 export class Details {
-  route: ActivatedRoute = inject(ActivatedRoute);
-  productService = inject(ProductHttpService);
-  product: ProductInfo | undefined;
-  changeDetectorRef = inject(ChangeDetectorRef)
-  applyForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-  });
-  constructor() {
-    const productId = Number(this.route.snapshot.params['id']);
-    this.productService.getProductById(productId).then((product) => {
-      this.product = product;
-      this.changeDetectorRef.markForCheck();
-    });
-  }
 
-  submitApplication(){
-    this.productService.submitApplication(
-      this.applyForm.value.firstName ?? '',
-      this.applyForm.value.lastName ?? '',
-      this.applyForm.value.email ?? '',
-    );
-  }
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductHttpService);
+
+  product$ = this.route.paramMap.pipe(
+    switchMap(params => {
+      const id = Number(params.get("id"));
+      return this.productService.getProductById(id);
+    })
+  );
+
 }

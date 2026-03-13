@@ -1,31 +1,32 @@
-import { Component, OnInit, inject, ChangeDetectorRef  } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ProductInfo } from '../product';
-import { ProductService } from '../product.service';
-import { ProductHttpService } from '../product-http.service';
+import { Component, OnInit, inject, ChangeDetectorRef } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { ProductInfo } from "../product";
+import { ProductService } from "../product.service";
+import { ProductHttpService } from "../product-http.service";
 
 @Component({
-  selector: 'app-product-admin',
+  selector: "app-product-admin",
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './product_table.html',
-  styleUrls: ['./product_table.css']
+  templateUrl: "./product_table.html",
+  styleUrls: ["./product_table.css"],
 })
 export class ProductAdminComponent implements OnInit {
   productService = inject(ProductHttpService);
   changedetectorRef = inject(ChangeDetectorRef);
   products: ProductInfo[] = [];
-  modal: 'add' | 'edit' | 'delete' | null = null;
+  modal: "add" | "edit" | "delete" | null = null;
   selected: ProductInfo | null = null;
   form: Omit<ProductInfo, 'id'> = {
     url: '',
     productName: '',
     description: '',
     unit: 0,
-    price: 0
+    price: 0,
+    imageUrl: "",
   };
-  toast: { msg: string, type: string } | null = null;
+  toast: { msg: string; type: string } | null = null;
   async ngOnInit() {
     await this.loadProducts();
   }
@@ -33,9 +34,9 @@ export class ProductAdminComponent implements OnInit {
     this.products = await this.productService.getAllProducts();
     this.changedetectorRef.markForCheck();
   }
-  showToast(msg: string, type = 'success') {
+  showToast(msg: string, type = "success") {
     this.toast = { msg, type };
-    setTimeout(() => this.toast = null, 2800);
+    setTimeout(() => (this.toast = null), 2800);
   }
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -49,28 +50,30 @@ export class ProductAdminComponent implements OnInit {
   }
 
   openAdd() {
-    this.modal = 'add';
+    this.modal = "add";
     this.form = {
       url: '',
       productName: '',
       description: '',
       unit: 0,
-      price: 0
+      price: 0,
+      imageUrl: "",
     };
   }
   openEdit(p: ProductInfo) {
-    this.modal = 'edit';
+    this.modal = "edit";
     this.selected = p;
     this.form = {
       url: p.url,
       productName: p.productName,
       description: p.description,
       unit: p.unit,
-      price: p.price
+      price: p.price,
+      imageUrl: p.imageUrl,
     };
   }
   openDelete(p: ProductInfo) {
-    this.modal = 'delete';
+    this.modal = "delete";
     this.selected = p;
   }
   closeModal() {
@@ -81,26 +84,23 @@ export class ProductAdminComponent implements OnInit {
     await this.productService.createProduct(this.form);
     await this.loadProducts();
     this.closeModal();
-    this.showToast('Product added');
+    this.showToast("Product added");
   }
   async editProduct() {
     if (!this.selected) return;
-    await this.productService.updateProduct(
-      this.selected.id,
-      this.form
-    );
+    await this.productService.updateProduct(this.selected.id, this.form);
     await this.loadProducts();
     this.closeModal();
-    this.showToast('Product updated');
+    this.showToast("Product updated");
   }
   async deleteProduct() {
     if (!this.selected) return;
     await this.productService.deleteProduct(this.selected.id);
     await this.loadProducts();
     this.closeModal();
-    this.showToast('Product deleted', 'danger');
+    this.showToast("Product deleted", "danger");
   }
   get productName(): string {
-    return this.selected?.productName ?? '';
+    return this.selected?.productName ?? "";
   }
 }
