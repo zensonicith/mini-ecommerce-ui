@@ -19,7 +19,6 @@ export class ProductAdminComponent implements OnInit {
   modal: "add" | "edit" | "delete" | null = null;
   selected: ProductInfo | null = null;
   form: Omit<ProductInfo, 'id'> = {
-    url: '',
     productName: '',
     description: '',
     unit: 0,
@@ -43,7 +42,7 @@ export class ProductAdminComponent implements OnInit {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
-      this.form.url = reader.result as string;
+      this.form.imageUrl = reader.result as string;
       this.changedetectorRef.markForCheck();
     };
     reader.readAsDataURL(file);
@@ -52,7 +51,6 @@ export class ProductAdminComponent implements OnInit {
   openAdd() {
     this.modal = "add";
     this.form = {
-      url: '',
       productName: '',
       description: '',
       unit: 0,
@@ -64,7 +62,6 @@ export class ProductAdminComponent implements OnInit {
     this.modal = "edit";
     this.selected = p;
     this.form = {
-      url: p.url,
       productName: p.productName,
       description: p.description,
       unit: p.unit,
