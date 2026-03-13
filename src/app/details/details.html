@@ -1,0 +1,12 @@
+<article *ngIf="product$ | async as product">
+    <img class="listing-photo" [src]="product.imageUrl" [alt]="'Exterior photo of ' + product.productName" />
+
+    <section class="listing-features">
+        <h2 class="section-heading">{{ product.productName }}</h2>
+
+        <ul>
+            <li>Price: $ {{ product.price | number:'1.2-2' }}</li>
+            <li>Units available: {{ product.unit }} pieces.</li>
+        </ul>
+    </section>
+</article>

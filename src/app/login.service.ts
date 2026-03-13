@@ -8,11 +8,10 @@ import { firstValueFrom } from 'rxjs';
 })
 export class LoginService {
   url = 'api/auth/login';
-  currentCustomer = signal<CustomerInfo | null>(null);
-  isLoggedIn = computed(() => this.currentCustomer() !== null);
+  isLoggedIn = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
   private readonly httpClient = inject(HttpClient);
-  constructor() {}
+  constructor() { }
 
   // Call api for login, if success, set currentCustomer and return true, else set errorMessage and return false
   async login(username: string, password: string): Promise<boolean> {
@@ -25,30 +24,23 @@ export class LoginService {
       const response = await firstValueFrom(
         this.httpClient.post<AuthResponse>(this.url, body)
       );
-      this.currentCustomer.set(response.customer);
       this.errorMessage.set(null);
       localStorage.setItem('token', response.token);
+      this.isLoggedIn.set(true);
       return true;
     } catch {
+      this.isLoggedIn.set(false);
       this.errorMessage.set('Login failed. Please check your credentials and try again.');
       return false;
     }
   }
 
-  logged(){
+  logged() {
     return localStorage.getItem('token') !== null;
   }
 
-  getCurrentCustomer(){
-    return this.currentCustomer();
-  }
-
   logout() {
-    this.currentCustomer.set(null);
+    this.isLoggedIn.set(false);
     localStorage.removeItem('token');
-  }
-
-  getCustomerRole() : string {
-    return this.currentCustomer()?.role ?? 'USER';
   }
 }
