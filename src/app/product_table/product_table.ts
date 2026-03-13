@@ -18,9 +18,10 @@ export class ProductAdminComponent implements OnInit {
   products: ProductInfo[] = [];
   modal: "add" | "edit" | "delete" | null = null;
   selected: ProductInfo | null = null;
-  form: Omit<ProductInfo, "id"> = {
-    productName: "",
-    description: "",
+  form: Omit<ProductInfo, 'id'> = {
+    url: '',
+    productName: '',
+    description: '',
     unit: 0,
     price: 0,
     imageUrl: "",
@@ -37,11 +38,23 @@ export class ProductAdminComponent implements OnInit {
     this.toast = { msg, type };
     setTimeout(() => (this.toast = null), 2800);
   }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.form.url = reader.result as string;
+      this.changedetectorRef.markForCheck();
+    };
+    reader.readAsDataURL(file);
+  }
+
   openAdd() {
     this.modal = "add";
     this.form = {
-      productName: "",
-      description: "",
+      url: '',
+      productName: '',
+      description: '',
       unit: 0,
       price: 0,
       imageUrl: "",
@@ -51,6 +64,7 @@ export class ProductAdminComponent implements OnInit {
     this.modal = "edit";
     this.selected = p;
     this.form = {
+      url: p.url,
       productName: p.productName,
       description: p.description,
       unit: p.unit,
@@ -86,7 +100,6 @@ export class ProductAdminComponent implements OnInit {
     this.closeModal();
     this.showToast("Product deleted", "danger");
   }
-
   get productName(): string {
     return this.selected?.productName ?? "";
   }
