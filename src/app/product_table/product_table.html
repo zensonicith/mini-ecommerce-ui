@@ -9,9 +9,9 @@
   </header>
   <table class="product-admin__table">
     <thead class="product-admin__table-head">
-      <tr class="product-admin__table-row">
+      <tr>
         <th>ID</th>
-        <!-- <th>Image</th> -->
+        <th>Image</th>
         <th>Name</th>
         <th>Description</th>
         <th>Unit</th>
@@ -19,38 +19,40 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody class="product-admin__table-body">
-       @for (p of products; track p.id){
-         <tr>
-            <td>{{p.id}}</td>
-            <!-- <td><img
-                [src]="p.url"
-                alt="product"
-                width="50"
-                height="50"
-                style="object-fit:cover;border-radius:6px"
-            />
-            </td> -->
-            <td>{{p.productName}}</td>
-            <td>{{p.description}}</td>
-            <td>{{p.unit}}</td>
-            <td>${{p.price}}</td>
-            <td>
-              <button
-                class="btn btn-edit"
-                (click)="openEdit(p)"
-              >Edit
-              </button>
-              <button
-                class="btn btn-danger"
-                (click)="openDelete(p)"
-              >Delete
-              </button>
-            </td>
-          </tr>
-       }     
+    <tbody>
+      @for (p of products; track p.id) {
+      <tr>
+        <td>{{p.id}}</td>
+        <td>
+          <img
+            [src]="p.url"
+            alt="product"
+            width="50"
+            height="50"
+            style="object-fit:cover;border-radius:6px"
+          />
+        </td>
+        <td>{{p.productName}}</td>
+        <td>{{p.description}}</td>
+        <td>{{p.unit}}</td>
+        <td>${{p.price}}</td>
+        <td>
+          <button
+            class="btn btn-edit"
+            (click)="openEdit(p)"
+          >Edit
+          </button>
+          <button
+            class="btn btn-danger"
+            (click)="openDelete(p)"
+          >Delete
+          </button>
+        </td>
+      </tr>
+      }
     </tbody>
   </table>
+
   @if (modal) {
   <div class="product-admin__overlay">
     <div class="product-admin__modal">
@@ -58,11 +60,22 @@
       <h2>
         {{modal === 'add' ? 'Add Product' : 'Edit Product'}}
       </h2>
-      <!-- <input
-        class="product-admin__input"
-        placeholder="Image URL"
-        [(ngModel)]="form.url"
-      /> -->
+      <label class="btn btn-secondary">
+        Upload Image
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+      </label>
+      @if (form.url) {
+      <img
+        [src]="form.url"
+        width="100"
+        style="margin-top:10px;border-radius:6px"
+      />
+      }
       <input
         class="product-admin__input"
         placeholder="Product Name"
@@ -85,13 +98,6 @@
         placeholder="Price"
         [(ngModel)]="form.price"
       />
-      <!-- @if (form.url) {
-        <img
-          [src]="form.url"
-          width="100"
-          style="margin-top:10px;border-radius:6px"
-        />
-      } -->
       <div class="product-admin__modal-actions">
         <button
           class="btn btn-primary"
@@ -113,13 +119,13 @@
       <div class="product-admin__modal-actions">
         <button
           class="btn btn-danger"
-          (click)="deleteProduct()"
-        > Delete
+          (click)="deleteProduct()"        >
+          Delete
         </button>
         <button
           class="btn btn-secondary"
           (click)="closeModal()"
-        > Cancel
+        >Cancel
         </button>
       </div>
       }
