@@ -18,11 +18,10 @@ export class Login {
   router = inject(Router);
   async submitLogin() {
     const { username, password } = this.loginForm.getRawValue();
-    console.log(username, password);
     const success = await this.loginService.login(username, password);
     if (success) {
       this.router.navigate(['/']);
-    }
+    } 
   }
 
   getErrorMessage() {

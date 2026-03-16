@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "test": "jest"
   },
   "private": true,
   "dependencies": {
@@ -15,6 +16,7 @@
     "@angular/forms": "^21.2.0-next",
     "@angular/platform-browser": "^21.2.0-next",
     "@angular/router": "^21.2.0-next",
+    "jest": "^30.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.16.0"
@@ -23,7 +25,17 @@
     "@angular/build": "^21.2.0-next",
     "@angular/cli": "^21.2.1",
     "@angular/compiler-cli": "^21.2.0-next",
+    "@types/jest": "^30.0.0",
     "@types/node": "^16.11.35",
+    "jasmine-core": "^6.1.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "jest-preset-angular": "^16.1.1",
+    "karma": "^6.4.4",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.1",
+    "karma-jasmine": "^5.1.0",
+    "karma-jasmine-html-reporter": "^2.2.0",
+    "ts-jest": "^29.4.6",
     "typescript": "~5.9.2"
   }
 }
