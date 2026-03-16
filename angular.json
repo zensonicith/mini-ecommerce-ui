@@ -10,7 +10,7 @@
           "inlineTemplate": true,
           "inlineStyle": true,
           "style": "scss",
-          "skipTests": true
+          "skipTests": false
         },
         "@schematics/angular:class": {
           "skipTests": true
