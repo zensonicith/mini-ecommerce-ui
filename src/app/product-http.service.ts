@@ -54,4 +54,15 @@ export class ProductHttpService {
       .then(() => true)
       .catch(() => false);
   }
+
+  // upload image
+  private uploadUrl = 'http://localhost:5291/api/uploads';
+  uploadImage(file: File) {
+    const formData = new FormData();
+    formData.append('image', file);
+    return this.http.post<{ url: string }>(this.uploadUrl, formData);
+  }
 }
+
+
+
