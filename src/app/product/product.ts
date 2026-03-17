@@ -6,7 +6,7 @@ import { RouterLink } from "@angular/router";
   selector: "app-product",
   imports: [RouterLink],
   templateUrl: "./product.html",
-  styleUrls: ["./product.css"],
+  styleUrls: ["./product.scss"],
 })
 export class Product {
   product = input.required<ProductInfo>();

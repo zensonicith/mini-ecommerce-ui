@@ -6,7 +6,7 @@ import { ProductHttpService } from "../product-http.service";
   selector: "app-home",
   imports: [Product],
   templateUrl: "./home.html",
-  styleUrls: ["./home.css"],
+  styleUrls: ["./home.scss"],
 })
 export class Home {
   productList: ProductInfo[] = [];
