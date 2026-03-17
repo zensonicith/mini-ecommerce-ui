@@ -9,7 +9,7 @@ import { ProductHttpService } from '../product-http.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: "./product_table.html",
-  styleUrls: ["./product_table.css"],
+  styleUrls: ["./product_table.scss"],
 })
 export class ProductAdminComponent implements OnInit {
 
@@ -30,8 +30,6 @@ export class ProductAdminComponent implements OnInit {
     imageUrl: "",
   };
 
-  toast: { msg: string; type: string } | null = null;
-
   async ngOnInit() {
     await this.loadProducts();
   }
@@ -39,11 +37,6 @@ export class ProductAdminComponent implements OnInit {
   async loadProducts() {
     this.products = await this.productService.getAllProducts();
     this.changedetectorRef.markForCheck();
-  }
-
-  showToast(msg: string, type = "success") {
-    this.toast = { msg, type };
-    setTimeout(() => (this.toast = null), 2800);
   }
 
   onFileSelected(event: any) {
@@ -66,7 +59,6 @@ export class ProductAdminComponent implements OnInit {
   openAdd() {
     this.modal = "add";
     this.previewImage = null;
-
     this.form = {
       productName: '',
       description: '',
@@ -79,9 +71,7 @@ export class ProductAdminComponent implements OnInit {
   openEdit(p: ProductInfo) {
     this.modal = "edit";
     this.selected = p;
-
     this.previewImage = p.imageUrl;
-
     this.form = {
       productName: p.productName,
       description: p.description,
@@ -105,7 +95,6 @@ export class ProductAdminComponent implements OnInit {
     await this.productService.createProduct(this.form);
     await this.loadProducts();
     this.closeModal();
-    this.showToast("Product added");
   }
 
   async editProduct() {
@@ -114,7 +103,6 @@ export class ProductAdminComponent implements OnInit {
     await this.productService.updateProduct(this.selected.id, this.form);
     await this.loadProducts();
     this.closeModal();
-    this.showToast("Product updated");
   }
 
   async deleteProduct() {
@@ -123,7 +111,6 @@ export class ProductAdminComponent implements OnInit {
     await this.productService.deleteProduct(this.selected.id);
     await this.loadProducts();
     this.closeModal();
-    this.showToast("Product deleted", "danger");
   }
 
   get productName(): string {
