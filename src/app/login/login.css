@@ -27,3 +27,14 @@
 .error-message{
     color: red;
 }
+
+.link-register {
+    margin-top: 5px;
+    color: #555;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+
+.link-register:hover {
+    text-decoration: underline;
+}

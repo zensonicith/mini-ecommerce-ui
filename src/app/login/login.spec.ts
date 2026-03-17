@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Login } from '../login/login';
-import { LoginService } from '../login.service';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { signal } from '@angular/core';
 
@@ -22,7 +22,7 @@ describe('JestTest', () => {
     await TestBed.configureTestingModule({
       imports: [Login],
       providers: [
-        { provide: LoginService, useValue: mockLoginService },
+        { provide: AuthService, useValue: mockLoginService },
         { provide: Router, useValue: mockRouter }
       ]
     })
@@ -43,7 +43,7 @@ describe('JestTest', () => {
     component.loginForm.setValue(account);
     await component.submitLogin();
     expect(mockLoginService.login).toHaveBeenCalledWith(account.username, account.password);
-    // expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+    expect(mockLoginService.isLoggedIn()).toBe(true);
   });
 
   it('login failed', async () => {
@@ -52,7 +52,6 @@ describe('JestTest', () => {
     component.loginForm.setValue(account);
     await component.submitLogin();
     expect(mockLoginService.login).toHaveBeenCalledWith(account.username, account.password);
-    // expect(component.getErrorMessage()).toBe('Login failed. Please check your credentials and try again.');
     expect(mockLoginService.isLoggedIn()).toBe(false);
   });
 });

@@ -1,6 +1,6 @@
 import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { LoginService } from './login.service';
+import { AuthService } from './auth.service';
 import { CustomerService } from './customer.service';
 import { CustomerInfo } from './user';
 
@@ -11,21 +11,18 @@ import { CustomerInfo } from './user';
   styleUrls: ['./app.css'],
 })
 export class App {
-  loginService = inject(LoginService);
+  authService = inject(AuthService);
   router = inject(Router)
   customerService = inject(CustomerService);
   customer = signal<CustomerInfo | null>(null);
   constructor() {
     effect(() => {
-      if (this.loginService.isLoggedIn() || this.logged()) {
+      if (this.authService.isLoggedIn() || this.logged()) {
         this.updateCustomerInfo();
-      }
-      else{
-        this.router.navigate(['/login']); 
       }
     });
   }
-  
+
   async updateCustomerInfo() {
     const customerInfo = await this.customerService.getCustomerInfo();
     this.customer.set(customerInfo);
@@ -33,7 +30,7 @@ export class App {
 
   logout() {
     this.customer.set(null);
-    this.loginService.logout();
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 
@@ -41,7 +38,7 @@ export class App {
     return this.customer();
   }
   logged() {
-    return this.loginService.logged();
+    return this.authService.logged();
   }
   isAdmin() {
     return this.customer()?.role === 'ADMIN';

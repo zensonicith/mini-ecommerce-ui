@@ -1,12 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { AuthResponse, CustomerInfo } from './user';
+import { AuthResponse, CustomerInfo, RegisterCustomerRequest } from './user';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class AuthService {
   url = 'api/auth/login';
   isLoggedIn = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
@@ -31,6 +31,19 @@ export class LoginService {
     } catch {
       this.isLoggedIn.set(false);
       this.errorMessage.set('Login failed. Please check your credentials and try again.');
+      return false;
+    }
+  }
+
+  async register(registerRequest: RegisterCustomerRequest): Promise<boolean> {
+    try {
+      await firstValueFrom(
+        this.httpClient.post('api/auth/register', registerRequest)
+      );
+      this.errorMessage.set(null);
+      return true;
+    } catch {
+      this.errorMessage.set('Registration failed. Please try again.');
       return false;
     }
   }
