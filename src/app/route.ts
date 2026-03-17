@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { Home } from "./home/home";
 import { Details } from "./details/details";
 import { Login } from "./login/login";
+import { Register } from "./register/register";
 import { ProductAdminComponent } from "./product_table/product_table";
 import { authGuard } from "./auth.guard";
 
@@ -17,6 +18,11 @@ const routeConfig: Routes = [
         component: Details,
         title: 'Home details',
         canActivate: [authGuard]
+    },
+    {
+        path: 'register',
+        component: Register,
+        title: 'Register'
     },
     {
         path: 'login',

@@ -1,0 +1,30 @@
+<div class="register">
+    <h2 class="register__title">Register</h2>
+    <form [formGroup]="registerForm" (submit)="submitRegister()" class="register__form">
+        <div class="register__field">
+            <label class="register__label" for="username">Username: </label>
+            <input class="register__input" type="text" id="username" name="username" formControlName="username" />
+        </div>
+        <div class="register__field">
+            <label class="register__label" for="password">Password: </label>
+            <input class="register__input" type="password" id="password" name="password" formControlName="password" />
+        </div>
+        <div class="register__field">
+            <label class="register__label" for="name">Name: </label>
+            <input class="register__input" type="text" id="name" name="name" formControlName="name" />
+        </div>
+        <div class="register__field">
+            <label class="register__label" for="address">Address: </label>
+            <input class="register__input" type="text" id="address" name="address" formControlName="address" />
+        </div>
+        <div class="register__field">
+            <label class="register__label" for="city">City: </label>
+            <input class="register__input" type="text" id="city" name="city" formControlName="city" />
+        </div>
+        <button class="register__button" type="submit">Register</button>
+        <a routerLink="/login" class="register__link">Already have an account? Login</a>
+    </form>
+    @if (getErrorMessage()) {
+        <div class="register__error">{{ getErrorMessage() }}</div>
+    }
+</div>
