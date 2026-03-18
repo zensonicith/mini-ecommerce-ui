@@ -6,6 +6,7 @@ import { Register } from "./register/register";
 import { ProductAdminComponent } from "./product_table/product_table";
 import { authGuard } from "./auth.guard";
 import { Cart } from "./cart/cart";
+import { OrderComponent } from "./order/order";
 
 const routeConfig: Routes = [
     {
@@ -40,6 +41,12 @@ const routeConfig: Routes = [
         path: 'cart',
         component: Cart,
         title: 'Shopping Cart',
+        canActivate: [authGuard]
+    },
+    {
+        path: 'order',
+        component: OrderComponent,
+        title: 'Order',
         canActivate: [authGuard]
     }
 ]

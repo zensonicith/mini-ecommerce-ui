@@ -1,0 +1,51 @@
+<div class="order">
+  <h2 class="order__title">Order detail</h2>
+  <div class="order__layout">
+    <div class="order__card order__card--user">
+      <h3 class="order__card-title">User Information</h3>
+      <div class="order__form">
+        <input 
+          class="order__input"
+          name="name"
+          [(ngModel)]="customer.name" 
+          placeholder="Name" 
+        />
+        <input 
+          class="order__input"
+          name="phone"
+          [(ngModel)]="customer.phone" 
+          placeholder="Phone" 
+        />
+        <input 
+          class="order__input order__input--full"
+          name="address"
+          [(ngModel)]="customer.address" 
+          placeholder="Address" 
+        />
+      </div>
+    </div>
+    <div class="order__card order__card--summary">
+      <h3 class="order__card-title">Confirm order detail</h3>
+      @for (item of orderItems; track item) {
+        <div class="order__item">
+          <div class="order__item-info">
+            <div class="order__item-name">{{ item.name }}</div>
+            <div class="order__item-sub">
+              ×{{ item.unit }}
+            </div>
+          </div>
+          <div class="order__item-price">
+            {{ formatPrice(item.price * item.unit) }}
+          </div>
+        </div>
+      }
+      <div class="order__total">
+        Total: <span class="order__total-value">{{ formatPrice(total) }}</span>
+      </div>
+      <button class="order__button" (click)="submitOrder()">
+        Checkout
+      </button>
+    </div>
+
+  </div>
+</div>
