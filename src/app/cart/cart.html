@@ -52,7 +52,7 @@
                     <p class="cart__checkout-total-text">Total ({{ getSelectedCount() }} items):</p>
                     <p class="cart__checkout-total-price">${{ getTotalPrice() }}</p>
                 </div>
-                <button class="cart__checkout-btn" type="button">Check Out</button>
+                <button class="cart__checkout-btn" type="button" (click)="proceedToOrder()">Check Out</button>
             </div>
         </div>
     </div>

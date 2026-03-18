@@ -1,5 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from '../cart.service';
+import { OrderService } from '../order.service';
 import { CartItem } from '../cart';
 
 @Component({
@@ -10,6 +12,8 @@ import { CartItem } from '../cart';
 })
 export class Cart implements OnInit {
   cartService = inject(CartService);
+  orderService = inject(OrderService);
+  router = inject(Router);
   cartItems = signal<CartItem[]>([]);
   selectedAll = signal<boolean>(false);
   selectedItems = new Map<number, boolean>();
@@ -77,5 +81,19 @@ export class Cart implements OnInit {
     return this.cartItems()
       .filter((item) => this.selectedItems.get(item.productId))
       .reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+
+  getSelectedItems(): CartItem[] {
+    return this.cartItems().filter((item) => this.selectedItems.get(item.productId));
+  }
+
+  proceedToOrder() {
+    const selectedItems = this.getSelectedItems();
+    if (selectedItems.length === 0) {
+      alert('Vui lòng chọn ít nhất một sản phẩm');
+      return;
+    }
+    this.orderService.setOrderItems(selectedItems);
+    this.router.navigate(['/order']);
   }
 }
