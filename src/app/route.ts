@@ -5,6 +5,7 @@ import { Login } from "./login/login";
 import { Register } from "./register/register";
 import { ProductAdminComponent } from "./product_table/product_table";
 import { authGuard } from "./auth.guard";
+import { OrderComponent } from "./order/order";
 
 const routeConfig: Routes = [
     {
@@ -34,6 +35,11 @@ const routeConfig: Routes = [
         component: ProductAdminComponent,
         title: 'Product Admin',
         canActivate: [authGuard]
+    },
+    {
+        path: 'order',
+        component: OrderComponent,
+        title: 'Order',
     }
 ]
 
