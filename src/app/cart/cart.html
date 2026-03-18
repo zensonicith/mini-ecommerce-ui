@@ -1,0 +1,59 @@
+<div class="cart">
+    <h1 class="cart__heading">Shopping Cart</h1>
+    
+    <!-- Select All Bar -->
+    <div class="cart__select-all-bar">
+        <input (change)="selectAll($event)" [checked]="selectedAll()" type="checkbox" class="cart__select-all-checkbox" id="selectAll">
+        <label for="selectAll" class="cart__select-all-label">Select All ({{ getCartItem().length }} Items)</label>
+    </div>
+
+    <!-- Cart Items -->
+    <div class="cart__items-container">
+        <ul class="cart__items" role="list">
+            @for (item of getCartItem(); track $index) {
+            <li class="cart__item" >
+                <div class="cart__item-checkbox-wrapper">
+                    <input (change)="selectItem(item.productId, $event)" [checked]="isItemSelected(item.productId)" type="checkbox" class="cart__item-checkbox" data-item-checkbox>
+                </div>
+                <div class="cart__item-image-wrapper">
+                    <img class="cart__item-image" [src]="item.imageUrl" [alt]="item.productName">
+                </div>
+                <div class="cart__item-content">
+                    <div class="cart__item-info">
+                        <h3 class="cart__item-name">{{ item.productName }}</h3>
+                        <p class="cart__item-price">${{ item.price }}</p>
+                    </div>
+                    <div class="cart__item-actions">
+                        <div class="cart__quantity-control">
+                            <button class="cart__quantity-btn" (click)="decreaseQuantity($index)">-</button>
+                            <input type="text" class="cart__quantity-input" [value]="item.quantity" readonly>
+                            <button class="cart__quantity-btn" (click)="increaseQuantity($index)">+</button>
+                        </div>
+                        <button class="cart__remove-btn" aria-label="Remove item">
+                            <svg class="cart__remove-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path clip-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            }
+        </ul>
+    </div>
+
+    <div class="cart__checkout-bar">
+        <div class="cart__checkout-content">
+            <div class="cart__checkout-left">
+                <input (change)="selectAll($event)" [checked]="selectedAll()" class="cart__checkout-select-all-checkbox" id="bottom-select-all" type="checkbox">
+                <label class="cart__checkout-select-all-label" for="bottom-select-all">Select All ({{ getSelectedCount() }})</label>
+            </div>
+            <div class="cart__checkout-right">
+                <div class="cart__checkout-total-group">
+                    <p class="cart__checkout-total-text">Total ({{ getSelectedCount() }} items):</p>
+                    <p class="cart__checkout-total-price">${{ getTotalPrice() }}</p>
+                </div>
+                <button class="cart__checkout-btn" type="button">Check Out</button>
+            </div>
+        </div>
+    </div>
+</div>
