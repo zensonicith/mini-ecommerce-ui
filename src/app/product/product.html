@@ -1,4 +1,11 @@
     <section class="listing">
-      <h2 class="listing-heading">{{ product().productName }}</h2>
-      <a [routerLink]="['/details', product().id]">Details</a>
-    </section>
+  <img 
+    class="listing__photo"
+    [src]="product().imageUrl" 
+    [alt]="product().productName"
+  />
+  <h2 class="listing-heading">{{ product().productName }}</h2>
+  <a [routerLink]="['/details', product().id]">
+    Details
+  </a>
+</section>
