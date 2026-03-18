@@ -33,6 +33,21 @@
         font-size: 1rem;
         margin-bottom: 0.5rem;
     }
+
+    &__add-button {
+        margin-top: 2rem;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        background-color: blueviolet;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
 }
 
 @media (max-width: 1024px) {

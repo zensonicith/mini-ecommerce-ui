@@ -52,6 +52,10 @@
   background-color: rgb(43, 101, 226);
 }
 
+.app__btn_type_cart {
+  background-color: #840649;
+}
+
 .app__content {
   padding: var(--content-padding);
 }

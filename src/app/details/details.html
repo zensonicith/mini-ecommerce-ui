@@ -13,5 +13,8 @@
                 Units available: {{ product.unit }} pieces
             </li>
         </ul>
+        <button class="product-details__add-button" (click)="addToCart(product.id)">
+            Add to cart
+        </button>
     </section>
 </article>
