@@ -34,6 +34,18 @@ const routeConfig: Routes = [
         component: ProductAdminComponent,
         title: 'Product Admin',
         canActivate: [authGuard]
+    },
+    {
+        path: 'checkout/success',
+        loadComponent: () =>
+            import('./checkout/success/checkout-success.component')
+                .then(m => m.CheckoutSuccessComponent)
+    },
+    {
+        path: 'checkout/cancel',
+        loadComponent: () =>
+            import('./checkout/cancel/checkout-cancel.component')
+                .then(m => m.CheckoutCancelComponent)
     }
 ]
 
