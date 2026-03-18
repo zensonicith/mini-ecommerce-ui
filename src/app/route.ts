@@ -48,6 +48,18 @@ const routeConfig: Routes = [
         component: OrderComponent,
         title: 'Order',
         canActivate: [authGuard]
+    },
+    {
+        path: 'checkout/success',
+        loadComponent: () =>
+            import('./checkout/success/checkout-success.component')
+                .then(m => m.CheckoutSuccessComponent)
+    },
+    {
+        path: 'checkout/cancel',
+        loadComponent: () =>
+            import('./checkout/cancel/checkout-cancel.component')
+                .then(m => m.CheckoutCancelComponent)
     }
 ]
 

@@ -1,0 +1,27 @@
+<div class="wrapper" *ngIf="!loading">
+
+    <div class="card">
+
+        <div class="icon success">✔</div>
+
+        <h2>Payment Successful</h2>
+
+        <p class="msg">
+            Your order has been paid successfully.
+        </p>
+
+        <div class="info">
+            <div>Order Id: <b>#{{order?.id}}</b></div>
+            <div>Total: <b>{{order?.totalAmount}} USD</b></div>
+            <div>Status: <b>{{order?.status}}</b></div>
+        </div>
+
+        <button (click)="goHome()">Back to Home</button>
+
+    </div>
+
+</div>
+
+<div class="wrapper" *ngIf="loading">
+    <h3>Verifying payment...</h3>
+</div>
