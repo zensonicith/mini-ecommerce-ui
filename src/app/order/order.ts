@@ -1,16 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { OrderService, OrderItem } from '../order.service';
 
 interface Customer {
   name: string;
   phone: string;
   address: string;
-}
-
-interface OrderItem {
-  name: string;
-  unit: number;
-  price: number;
 }
 
 @Component({
@@ -19,7 +14,8 @@ interface OrderItem {
   templateUrl: './order.html',
   styleUrls: ['./order.scss']
 })
-export class OrderComponent {
+export class OrderComponent implements OnInit {
+  orderService = inject(OrderService);
 
   customer: Customer = {
     name: 'Nguyễn Văn A',
@@ -27,11 +23,19 @@ export class OrderComponent {
     address: '123 Nguyễn Trãi, Quận 1, TP.HCM'
   };
 
-  orderItems: OrderItem[] = [
-    { name: 'Nike Air Max 270', unit: 1, price: 850000 },
-    { name: 'Áo thun basic', unit: 2,  price: 280000 },
-    { name: 'Balo thời trang', unit: 1, price: 450000 }
-  ];
+  orderItems: OrderItem[] = [];
+
+  ngOnInit() {
+    this.orderItems = this.orderService.getOrderItems();
+    // Nếu không có items từ cart, dùng mock data
+    if (this.orderItems.length === 0) {
+      this.orderItems = [
+        { name: 'Nike Air Max 270', unit: 1, price: 850000, productId: 1 },
+        { name: 'Áo thun basic', unit: 2, price: 280000, productId: 2 },
+        { name: 'Balo thời trang', unit: 1, price: 450000, productId: 3 }
+      ];
+    }
+  }
 
   get total(): number {
     return this.orderItems.reduce(
